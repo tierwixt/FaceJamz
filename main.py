@@ -1,5 +1,5 @@
 # Lightning talk demo: Tierney & Annie. Beginner Python project FaceJamz! 
-# This IoT proejct will take a picture on the Pi & play songs for emotions.
+# This IoT project will take a picture on the Pi & play songs for emotions.
 ########### Python 2.7 #############
 
 import os
@@ -8,9 +8,9 @@ import httplib, urllib, base64
 import json
 
 # step 1: take pic on pi
-#os.system("raspistill -o face.jpg -q 40")
+# os.system("raspistill -o face.jpg -q 40")
 
-# step 2: call emotion API
+# step 2: API call - Cognitive Services Emotion API
 headers = {
     # Request headers
     'Content-Type': 'application/octet-stream',
@@ -36,7 +36,7 @@ except Exception as e:
 
 result = json.loads(data)
 
-# Define each emotion score from array values 
+# Define each emotion score from array values. Grab information from the JSON array. 
 HappinessScore = result[0]["scores"]["happiness"]
 SadnessScore = result[0]["scores"]["sadness"]
 NeutralScore = result[0]["scores"]["neutral"]
@@ -46,13 +46,15 @@ NeutralScore = result[0]["scores"]["neutral"]
 if(HappinessScore > SadnessScore) and (HappinessScore > NeutralScore):
     # HappinessScore is largest
     # Play HappySong
-    #os.system("aplay ./AudioFiles/Sorry.mp3")
-    print "Happy"
+    # os.system("aplay ./AudioFiles/Sorry.mp3")
+    print "Happy " + str(HappinessScore*100) + "%"
 if(SadnessScore > HappinessScore) and (SadnessScore > NeutralScore):
     # SadnessScore is largest
     # Play SadSong
-    print "Sad"
+    # os.system("aplay ./AudioFiles/Chandelier.mp3")
+    print "Sad " + str(SadnessScore*100) + "%"
 if (NeutralScore > HappinessScore) and (NeutralScore > SadnessScore):
     # NeutralScore is largest
     # Play NeutralSong
-    print "Neutral"
+    # os.system("aplay ./AudioFiles/Cold.mp3")
+    print "Neutral " + str(NeutralScore*100) + "%"
