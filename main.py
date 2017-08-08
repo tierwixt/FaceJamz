@@ -8,7 +8,7 @@ import httplib, urllib, base64
 import json
 
 # step 1: take pic on pi
-# os.system("raspistill -o face.jpg -q 40")
+os.system("raspistill -o face.jpg -q 40")
 
 # step 2: API call - Cognitive Services Emotion API
 headers = {
@@ -46,15 +46,15 @@ NeutralScore = result[0]["scores"]["neutral"]
 if(HappinessScore > SadnessScore) and (HappinessScore > NeutralScore):
     # HappinessScore is largest
     # Play HappySong
-    # os.system("aplay ./AudioFiles/Sorry.mp3")
+os.system("aplay ./AudioFiles/putyourrecordson.mp3")
     print "Happy " + str(HappinessScore*100) + "%"
 if(SadnessScore > HappinessScore) and (SadnessScore > NeutralScore):
     # SadnessScore is largest
     # Play SadSong
-    # os.system("aplay ./AudioFiles/Chandelier.mp3")
+os.system("aplay ./AudioFiles/imissyou.mp3")
     print "Sad " + str(SadnessScore*100) + "%"
 if (NeutralScore > HappinessScore) and (NeutralScore > SadnessScore):
     # NeutralScore is largest
     # Play NeutralSong
-    # os.system("aplay ./AudioFiles/Cold.mp3")
+os.system("aplay ./AudioFiles/stoletheshow.mp3")
     print "Neutral " + str(NeutralScore*100) + "%"
